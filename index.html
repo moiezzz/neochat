@@ -4,15 +4,16 @@
   <meta charset="utf-8">
   <title>NeoChat 大廳</title>
   <style>
-    /* 背景：星空或科幻風 */
     body {
       margin: 0;
       padding: 0;
       font-family: sans-serif;
-      background: url("https://images.unsplash.com/photo-1611926652541-581f9cb31dc1") no-repeat center center fixed;
+      /* 改用 picsum 的隨機圖 */
+      background: url("https://picsum.photos/1920/1080") no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       text-align: center;
+      min-height: 100vh; /* 讓背景填滿視窗 */
     }
 
     .container {
@@ -114,7 +115,10 @@
 
     function goToZone(zoneName) {
       alert(`你想進入 ${zoneName} 區嗎？\n(目前尚未實作，可連到不同的聊天室或 AI 設定)`);
-      // 未來可依 zoneName 帶到不同的 chat頁，如 chat_emotion.html
+    }
+  </script>
+</body>
+</html>chat_emotion.html
     }
   </script>
 </body>
