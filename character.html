@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>角色創建</title>
+  <style>
+    body {
+      background-color: #0e0e1a;
+      color: #fff;
+      font-family: sans-serif;
+      margin: 0; padding: 0;
+    }
+    .container {
+      max-width: 400px;
+      margin: 40px auto;
+      text-align: center;
+    }
+    label { display: block; margin: 10px 0 5px; }
+    input, select {
+      width: 80%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background-color: #00ffc3;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #00d6ac;
+    }
+    h2 { margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>創造你的角色</h2>
+    <label>暱稱：</label>
+    <input type="text" id="nickname" placeholder="輸入角色名稱...">
+
+    <label>頭像：</label>
+    <select id="avatar">
+      <option value="avatar1.png">頭像1</option>
+      <option value="avatar2.png">頭像2</option>
+      <option value="avatar3.png">頭像3</option>
+    </select>
+
+    <label>性格風格：</label>
+    <select id="personality">
+      <option value="funny">搞笑</option>
+      <option value="cool">冷靜</option>
+      <option value="warm">溫柔</option>
+    </select>
+
+    <br>
+    <button onclick="createCharacter()">創建角色</button>
+  </div>
+
+  <script>
+    function createCharacter() {
+      const nickname = document.getElementById('nickname').value.trim();
+      const avatar = document.getElementById('avatar').value;
+      const personality = document.getElementById('personality').value;
+
+      if (!nickname) {
+        alert('請輸入暱稱');
+        return;
+      }
+
+      // 將角色資訊存進 localStorage
+      const characterData = { nickname, avatar, personality };
+      localStorage.setItem('myCharacter', JSON.stringify(characterData));
+
+      // 跳轉到大廳頁面 (index.html)
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
