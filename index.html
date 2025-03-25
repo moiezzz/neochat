@@ -1,65 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>NeoChat 大廳</title>
+  <meta charset="UTF-8">
+  <title>NeoChat 大廳 - 霓虹城市</title>
   <style>
+    /* 全局樣式 */
     body {
-      margin: 0;
+      margin: 0; 
       padding: 0;
-      font-family: sans-serif;
-      /* 改用 picsum 的隨機圖 */
-      background: url("https://picsum.photos/1920/1080") no-repeat center center fixed;
-      background-size: cover;
+      background: #0e0e1a;
       color: #fff;
+      font-family: sans-serif;
       text-align: center;
-      min-height: 100vh; /* 讓背景填滿視窗 */
+      min-height: 100vh;
     }
 
-    .container {
-      max-width: 600px;
-      margin: 60px auto;
-      background: rgba(0, 0, 0, 0.5);
+    /* 容器：用來放城市圖 + 絕對定位區塊 */
+    .city-container {
+      position: relative; 
+      width: 900px;          /* 你可以改成 100% 或 800px */
+      margin: 40px auto;     /* 置中 */
+      box-shadow: 0 0 15px rgba(0,255,255,0.2);
       border-radius: 10px;
-      padding: 30px;
+      overflow: hidden;      /* 避免絕對定位元素跑出容器 */
     }
 
-    h1 {
+    /* 霓虹城市背景圖 */
+    .city-image {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* 大廳上方的文字區 */
+    .info-box {
+      margin: 20px auto 10px;
+      max-width: 600px;
+      background: rgba(0, 255, 195, 0.1);
+      border: 2px solid rgba(0,255,195,0.3);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,255,195,0.2);
+    }
+    .info-box h1 {
       margin-top: 0;
-      font-size: 2em;
       text-shadow: 0 0 8px #00ffc3;
     }
 
-    .zone-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 30px;
-    }
-
-    .zone {
-      width: 120px;
-      height: 120px;
-      margin: 10px;
-      background: rgba(0,255,195,0.2);
-      border: 2px solid #00ffc3;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* 隱形按鈕區域（點擊區） */
+    .click-zone {
+      position: absolute;
+      border: 2px solid rgba(255,0,0,0.5); /* 紅色半透明邊框，幫你對位置 */
       cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
+      transition: 0.3s;
     }
-    .zone:hover {
-      background: rgba(0,255,195,0.4);
-      transform: scale(1.05);
-    }
-    .zone span {
-      color: #fff;
-      font-weight: bold;
-      text-shadow: 0 0 5px #00ffc3;
+    .click-zone:hover {
+      background: rgba(255,255,255,0.1); /* 滑過時一點點亮 */
     }
 
+    /* 分區示例 (你要自己微調 top/left/width/height) */
+    .zone-emotion {
+      top: 150px; left: 100px;
+      width: 80px; height: 120px;
+    }
+    .zone-dream {
+      top: 100px; left: 300px;
+      width: 90px; height: 140px;
+    }
+    .zone-logic {
+      top: 220px; left: 500px;
+      width: 80px; height: 130px;
+    }
+    .zone-avatar {
+      top: 300px; left: 700px;
+      width: 100px; height: 140px;
+    }
+
+    /* 按鈕樣式 */
     button {
       background-color: #00ffc3;
       border: none;
@@ -76,50 +93,70 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 id="welcome"></h1>
-    <p>歡迎來到星球大廳！請選擇想前往的區域：</p>
 
-    <div class="zone-container">
-      <div class="zone" onclick="goToZone('Emotion')">
-        <span>Emotion Flow</span>
-      </div>
-      <div class="zone" onclick="goToZone('Dream')">
-        <span>Dream Chamber</span>
-      </div>
-      <div class="zone" onclick="goToZone('Logic')">
-        <span>Logic Zone</span>
-      </div>
-      <div class="zone" onclick="goToZone('Avatar')">
-        <span>Avatar Forge</span>
-      </div>
-    </div>
-
-    <br>
-    <button onclick="goToChat()">進入聊天室</button>
-  </div>
-
+  <!-- 角色檢查：沒有角色就回去創建 -->
   <script>
-    // 檢查 localStorage 是否有角色資料
     const data = localStorage.getItem('myCharacter');
     if (!data) {
       window.location.href = 'character.html';
-    } else {
-      const character = JSON.parse(data);
+    }
+  </script>
+
+  <div class="info-box">
+    <h1 id="welcome">歡迎, ???</h1>
+    <p>這裡是霓虹未來城市的大廳，你可以點擊大樓進入不同分區，或直接進入聊天室！</p>
+    <button onclick="goToChat()">進入聊天室</button>
+  </div>
+
+  <div class="city-container">
+    <!-- 你可以換成自己的圖檔，如 src="neoncity.jpg" -->
+    <img 
+      src="https://images.unsplash.com/photo-1546443046-fdf8428f1c6d" 
+      alt="Neon City" 
+      class="city-image"
+    >
+
+    <!-- 四大區域：Emotion Flow, Dream Chamber, Logic Zone, Avatar Forge -->
+    <div class="click-zone zone-emotion"
+         onclick="goToZone('Emotion')"></div>
+
+    <div class="click-zone zone-dream"
+         onclick="goToZone('Dream')"></div>
+
+    <div class="click-zone zone-logic"
+         onclick="goToZone('Logic')"></div>
+
+    <div class="click-zone zone-avatar"
+         onclick="goToZone('Avatar')"></div>
+  </div>
+
+  <script>
+    // 讀取角色資訊，顯示暱稱
+    const character = JSON.parse(localStorage.getItem('myCharacter'));
+    if (character) {
       document.getElementById('welcome').innerText = `歡迎, ${character.nickname}!`;
     }
 
+    // 按鈕：進入聊天室
     function goToChat() {
+      // 你的聊天頁檔名
       window.location.href = 'chat.html';
     }
 
+    // 點擊大樓：進入對應分區
     function goToZone(zoneName) {
-      alert(`你想進入 ${zoneName} 區嗎？\n(目前尚未實作，可連到不同的聊天室或 AI 設定)`);
+      // 你可以改成實際要跳的頁面，如 emotion.html / dream.html 等
+      // 這裡先示範 alert 或隨便連 chat_emotion.html
+      if (zoneName === 'Emotion') {
+        window.location.href = 'chat_emotion.html';
+      } else if (zoneName === 'Dream') {
+        window.location.href = 'chat_dream.html';
+      } else if (zoneName === 'Logic') {
+        window.location.href = 'chat_logic.html';
+      } else if (zoneName === 'Avatar') {
+        window.location.href = 'chat_avatar.html';
+      }
     }
   </script>
 </body>
-</html>chat_emotion.html
-    }
-  </script>
-</body>
-</html>>
+</html>
